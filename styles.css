@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.answers ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.answers li {
+    margin: 10px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.scores {
+    display: flex;
+    justify-content: center;
+    border: solid 1px gray;
+    width: 60%;
+    margin: auto;
+}
+
+.player {
+    margin: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .answers ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .answers li {
+        width: 40%;
+    }
+
+    .gameboard {
+        width: 70%;
+        margin: auto;
+    }
+
+}
