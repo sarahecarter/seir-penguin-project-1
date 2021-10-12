@@ -77,7 +77,7 @@ $.ajax(url)
 })
 
 ///////////////////////////////
-// Event Listener/ Game Logic
+// Event Listeners/ Game Logic
 ///////////////////////////////
 
 // Add an event listener on the answers
@@ -99,3 +99,23 @@ $answers.on("click", (e) => {
 
     }
 })
+
+// Reset event listener
+$('button').on("click", () => {
+    // Reset player states and scores on board
+    state.player1 = 0;
+    $p1score.text(state.player1);
+    state.player2 = 0;
+    $p2score.text(state.player2);
+    // Reset to player 1 being first
+    state.player1turn = true;
+    // Set board with new question
+    setBoard();
+})
+
+
+
+/* Ideas:
+- Use setTimeout or another jquery method to delay resetting the board so that user can see answer highlighted with correct or incorrect color
+- Toggle an active class on the player divs to show who's turn it is 
+*/
