@@ -5,21 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="app.js" defer></script>
 </head>
 <body>
     <h1>Pop Culture Trivia</h1>
-
     <div class="gameboard">
-        <div class="question"><h2>Example Question Here</h2></div>
+
+        <div class="question"><h2></h2></div>
         <div class="answers-container">
             <ul>
-                <li id="a" class="answer">Answer</li>
-                <li id="b" class="answer">Answer</li>
-                <li id="c" class="answer">Answer</li>
-                <li id="d" class="answer">Answer</li>
+                <li id="a" class="answer"></li>
+                <li id="b" class="answer"></li>
+                <li id="c" class="answer"></li>
+                <li id="d" class="answer"></li>
             </ul>
         </div>
         <div class="scores">
@@ -32,6 +35,7 @@
                 <h4>0</h4>
             </div>
         </div>
+        <p id="questions-left"></p>
         <button>Reset Game</button>
     </div>
 </body>

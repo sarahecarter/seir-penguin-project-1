@@ -1,6 +1,39 @@
+/* Variables */
+:root {
+    --pink: #D83F87;
+    --dark-purple: #2A1B3D;
+    --blue: #44318D;
+    --light-purple: #8265a8;
+}
+
 * {
     box-sizing: border-box;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: rgb(14,10,69);
+    background: radial-gradient(circle, var(--dark-purple) 25%, var(--blue) 93%);
+}
+
+h1 {
+    color: white;
+    text-shadow: 3px 2px 1px var(--pink);
+}
+
+.gameboard {
+    width: 90%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 10px 10px 44px 2px rgba(5,3,23,0.9);
+}
+
+.question h2 {
+    color: var(--dark-purple);
+    font-size: 1.2em;
 }
 
 .answers-container ul {
@@ -12,24 +45,74 @@
 }
 
 .answers-container li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-purple);
+    color: white;
     margin: 10px;
     border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
     cursor: pointer;
+    transition: .5s ease-out;
+}
+
+.answers-container li:hover {
+    background-color: var(--blue);
+    box-shadow: 3px 3px 18px 2px gray;
+    transform: scale(1.01);
 }
 
 .scores {
     display: flex;
     justify-content: space-around;
-    border: solid 1px gray;
-    width: 60%;
     margin: auto;
+    border-radius: 10px;
 }
 
 .player {
     margin: 10px;
 }
 
+.player h3 {
+    border-bottom: 1px solid var(--pink);
+}
+
+.player h3, .player h4 {
+    color: var(--dark-purple);;
+}
+
+#questions-left {
+    color: var(--blue);
+    margin-top: 0;
+}
+
+button {
+    background-color: var(--pink);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 1s ease-in-out;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--blue);
+    transform: scale(1.01); 
+}
+
 @media screen and (min-width: 768px) {
+
+    h1 {
+        font-size: 3em;
+    }
+
+    .question h2 {
+        font-size: 1.5em;
+    }
+
     .answers-container ul {
         flex-direction: row;
         flex-wrap: wrap;

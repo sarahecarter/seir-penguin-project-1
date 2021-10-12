@@ -10,6 +10,7 @@ const state = {
 }
 
 let questions = [];
+let usedQuestions = [];
 
 ////////////////////////
 // Main DOM Elements
@@ -22,6 +23,7 @@ const $c = $('#c');
 const $d = $('#d');
 const $p1score = $('#player1 h4');
 const $p2score = $('#player2 h4');
+const $questionsLeft = $('#questions-left');
 
 ////////////////////////
 // Helper Functions
@@ -36,6 +38,12 @@ const setBoard = () => {
     const q = getRandomQuestion(questions);
     // Update the current question in game state object
     state.currentQuestion = q;
+    // Move question from questions array to usedQuestions array so it can't be asked again
+    usedQuestions.push(q);
+    const qIndex = questions.indexOf(q);
+        // removes the question from the questions array
+    questions.splice(qIndex, 1);
+
 
     // Update text on page with question
     $question.text(q.question);
@@ -43,6 +51,9 @@ const setBoard = () => {
     $b.text(q.b);
     $c.text(q.c);
     $d.text(q.d);
+
+    // Update the amount of questions left in game
+    $questionsLeft.text(`Questions left: ${questions.length}`);
 }
 
 const updatePlayerScore = () => {
@@ -82,24 +93,32 @@ $.ajax(url)
 
 // Add an event listener on the answers
 $answers.on("click", (e) => {
-    // if the answer clicked is the correct answer
-    if ($(e.target).text() === state.currentQuestion.answer) {
-        // update the player score and switch players
-        updatePlayerScore();
-        // update the game board with a new question
-        setBoard();
-        
+    // Checks if there are still questions left
+    if (questions.length === 0) {
+        console.log('game over');
     }
-    // if the answer clicked is the incorrect answer 
     else {
-        // just switch to the player 
-        state.player1turn = !state.player1turn;
-        // update the game board with a new question
-        setBoard();
+        // if the answer clicked is the correct answer
+        if ($(e.target).text() === state.currentQuestion.answer) {
+            // update the player score and switch players
+            updatePlayerScore();
+            // update the game board with a new question
+            setBoard();
+        
+        }
+        // if the answer clicked is the incorrect answer 
+        else {
+            // just switch to the player 
+            state.player1turn = !state.player1turn;
+            // update the game board with a new question
+            setBoard();
 
+        }
     }
+
 })
 
+// Need to move questions from usedQuestions back to questions array 
 // Reset event listener
 $('button').on("click", () => {
     // Reset player states and scores on board
@@ -109,10 +128,18 @@ $('button').on("click", () => {
     $p2score.text(state.player2);
     // Reset to player 1 being first
     state.player1turn = true;
-    // Set board with new question
+
+    // Reset questions
+    // Move questions from usedQuestions back to questions array 
+    usedQuestions.forEach(question => {
+        questions.push(question);
+    })
+    // Empty the usedQuestions array
+    usedQuestions = [];
+
+    // Reset board
     setBoard();
 })
-
 
 
 /* Ideas:
