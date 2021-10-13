@@ -15,6 +15,7 @@ let usedQuestions = [];
 ////////////////////////
 // Main DOM Elements
 ////////////////////////
+const $overlay = $('.overlay');
 const $question = $('.question h2');
 const $answers = $('.answer');
 const $a = $('#a');
@@ -56,10 +57,6 @@ const setBoard = () => {
     $questionsLeft.text(`Questions left: ${questions.length}`);
 }
 
-const checkAnswer = () => {
-    setTimeout(() => {alert('hi!')}, 3000);
-}
-
 const updatePlayerScore = () => {
     // if it is player 1's turn add to their score and switch players
     if (state.player1turn) {
@@ -72,6 +69,18 @@ const updatePlayerScore = () => {
         state.player2 += 1;
         $p2score.text(state.player2);
         state.player1turn = true;
+    }
+}
+
+const checkScores = () => {
+    if (state.player1 > state.player2) {
+        $("#results").text("Player 1 wins!");
+    }
+    else if (state.player1 < state.player2) {
+        $("#results").text("Player 2 wins!");
+    }
+    else if (state.player1 === state.player2) {
+        $("#results").text("It's a tie!");
     }
 }
 
@@ -95,12 +104,18 @@ $.ajax(url)
 // Event Listeners/ Game Logic
 ///////////////////////////////
 
+// Start game
+$('.startBtn').on("click", () => {
+    $overlay.css("display", "none");
+})
+
 // Add an event listener on the answers
 $answers.on("click", (e) => {
     
     // Checks if there are still questions left
     if (questions.length === 0) {
-        console.log('game over');
+        $(".end").css("display", "flex");
+        checkScores();
     }
     else {
         // if the answer clicked is the correct answer
@@ -117,7 +132,7 @@ $answers.on("click", (e) => {
                 setBoard();
                 // remove the animation class
                 $(e.target).removeClass("correct");
-            }, 3000)
+            }, 2000)
 
         
         }
@@ -125,7 +140,7 @@ $answers.on("click", (e) => {
         else {
             // animate the wrong answer choice
             $(e.target).addClass("incorrect");
-            
+
             // highlight the correct answer 
             
             // Delay changing the board to give time for animation
@@ -136,7 +151,7 @@ $answers.on("click", (e) => {
                 setBoard();
                 // remove the animation class
                 $(e.target).removeClass("incorrect");
-            }, 2500)
+            }, 2000)
             
 
         }
@@ -166,8 +181,3 @@ $('button').on("click", () => {
     setBoard();
 })
 
-
-/* Ideas:
-- Use setTimeout or another jquery method to delay resetting the board so that user can see answer highlighted with correct or incorrect color
-- Toggle an active class on the player divs to show who's turn it is 
-*/
