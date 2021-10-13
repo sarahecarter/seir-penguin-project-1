@@ -117,17 +117,8 @@ $('.startBtn').on("click", () => {
 
 // Add an event listener on the answers
 $answers.on("click", (e) => {
-    
-    // Checks if there are still questions left
-    if (questions.length === 0) {
-        $(".end").css("display", "flex");
-        checkScores();
-    }
-    else {
         // if the answer clicked is the correct answer
         if ($(e.target).text() === state.currentQuestion.answer) {
-
-
 
             // animate the correct answer choice
             $(e.target).addClass("correct");
@@ -136,42 +127,47 @@ $answers.on("click", (e) => {
             setTimeout(() => {
                 // update the player score and switch players
                 updatePlayerScore();
-                // update the game board with a new question
-                setBoard();
-                // remove the animation class
-                $(e.target).removeClass("correct");
-                // Switch active player
-                $('#player1').toggleClass("active");
-                $('#player2').toggleClass("active");
-
+                // Checks if there are still questions left
+                if (questions.length === 0) {
+                    $(".end").css("display", "flex");
+                    checkScores();
+                }
+                else {
+                    // update the game board with a new question
+                    setBoard();
+                    // remove the animation class
+                    $(e.target).removeClass("correct");
+                    // Switch active player
+                    $('#player1').toggleClass("active");
+                    $('#player2').toggleClass("active");
+                }
             }, 2000)
-
-        
         }
         // if the answer clicked is the incorrect answer 
         else {
-            // animate the wrong answer choice
-            $(e.target).addClass("incorrect");
-
-            // highlight the correct answer 
+            // Checks if there are still questions left
+            if (questions.length === 0) {
+                $(".end").css("display", "flex");
+                checkScores();
+            }
+            else {
+                // animate the wrong answer choice
+                $(e.target).addClass("incorrect");
             
-            // Delay changing the board to give time for animation
-            setTimeout(() => {
-                // just switch to the player 
-                state.player1turn = !state.player1turn;
-                // update the game board with a new question
-                setBoard();
-                // remove the animation class
-                $(e.target).removeClass("incorrect");
-                // Switch active player
-                $('#player1').toggleClass("active");
-                $('#player2').toggleClass("active");
-            }, 2000)
-            
-
+                // Delay changing the board to give time for animation
+                setTimeout(() => {
+                    // just switch to the player 
+                    state.player1turn = !state.player1turn;
+                    // update the game board with a new question
+                    setBoard();
+                    // remove the animation class
+                    $(e.target).removeClass("incorrect");
+                    // Switch active player
+                    $('#player1').toggleClass("active");
+                    $('#player2').toggleClass("active");
+                }, 2000)
+            }    
         }
-    }
-
 })
 
 // Reset event listener
