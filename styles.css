@@ -6,6 +6,7 @@
     --light-purple: #8265a8;
 }
 
+/* Main Styling */
 * {
     box-sizing: border-box;
     text-align: center;
@@ -51,18 +52,24 @@ h1 {
     background-color: var(--dark-purple);
     color: white;
     margin: 10px;
-    border: 1px solid gray;
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
     transition: .5s ease-out;
 }
 
-.answers-container li:hover {
-    background-color: var(--blue);
-    box-shadow: 3px 3px 18px 2px gray;
-    transform: scale(1.01);
+.incorrect {
+    animation: incorrect 2.5s, shake 1s;
 }
+
+.correct {
+    animation: correct 2.5s, pulse 2s;
+}
+
+.highlight {
+    background-color: green;
+}
+
 
 .scores {
     display: flex;
@@ -80,7 +87,7 @@ h1 {
 }
 
 .player h3, .player h4 {
-    color: var(--dark-purple);;
+    color: var(--dark-purple);
 }
 
 #questions-left {
@@ -94,15 +101,11 @@ button {
     border: none;
     border-radius: 10px;
     padding: 10px;
-    transition: 1s ease-in-out;
+    transition: .5s ease-in-out;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: var(--blue);
-    transform: scale(1.01); 
-}
-
+/* Media Queries */
 @media screen and (min-width: 768px) {
 
     h1 {
@@ -132,3 +135,105 @@ button:hover {
     }
 
 }
+
+@media screen and (min-width: 1024px) {
+    h1 {
+        font-size: 3.5em;
+    }
+}
+
+/* Only adds hover styles to screens that support it */
+@media (hover: hover) {
+    .answers-container li:hover {
+        background-color: var(--blue);
+        box-shadow: 3px 3px 18px 2px gray;
+        transform: scale(1.01);
+    }
+
+    button:hover {
+        background-color: var(--blue);
+        transform: scale(1.01); 
+    }
+  }
+
+  /* Keyframes */
+
+  @keyframes incorrect {
+      0% {
+          background-color: red;
+      }
+
+      100% {
+          background-color: var(--dark-purple);
+      }
+  }
+
+  @keyframes correct {
+    0% {
+        background-color: green;
+    }
+
+    50% {
+        background-color: green;
+    }
+
+    100% {
+        background-color: var(--dark-purple);
+    }
+  }
+
+  @keyframes shake {
+    10% {
+        transform: rotate(2deg);
+    }
+
+    20% {
+        transform: rotate(-2deg);
+    }
+
+    30% {
+        transform: rotate(2deg);
+    }
+
+    40% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+
+    60% {
+        transform: rotate(-2deg);
+    }
+
+    70% {
+        transform: rotate(2deg);
+    }
+
+    80% {
+        transform: rotate(-2deg);
+    }
+
+  }
+
+  @keyframes pulse {
+    20% {
+        transform: scale(1.05);
+    }
+    30% {
+    transform: scale(1);
+    }
+    40% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.05);
+    }
+    70% {
+    transform: scale(1);
+    }
+  }

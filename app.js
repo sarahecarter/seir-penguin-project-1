@@ -56,6 +56,10 @@ const setBoard = () => {
     $questionsLeft.text(`Questions left: ${questions.length}`);
 }
 
+const checkAnswer = () => {
+    setTimeout(() => {alert('hi!')}, 3000);
+}
+
 const updatePlayerScore = () => {
     // if it is player 1's turn add to their score and switch players
     if (state.player1turn) {
@@ -93,6 +97,7 @@ $.ajax(url)
 
 // Add an event listener on the answers
 $answers.on("click", (e) => {
+    
     // Checks if there are still questions left
     if (questions.length === 0) {
         console.log('game over');
@@ -100,25 +105,45 @@ $answers.on("click", (e) => {
     else {
         // if the answer clicked is the correct answer
         if ($(e.target).text() === state.currentQuestion.answer) {
-            // update the player score and switch players
-            updatePlayerScore();
-            // update the game board with a new question
-            setBoard();
+
+            // animate the correct answer choice
+            $(e.target).addClass("correct");
+
+            // Delay changing the board to give time for animation
+            setTimeout(() => {
+                // update the player score and switch players
+                updatePlayerScore();
+                // update the game board with a new question
+                setBoard();
+                // remove the animation class
+                $(e.target).removeClass("correct");
+            }, 3000)
+
         
         }
         // if the answer clicked is the incorrect answer 
         else {
-            // just switch to the player 
-            state.player1turn = !state.player1turn;
-            // update the game board with a new question
-            setBoard();
+            // animate the wrong answer choice
+            $(e.target).addClass("incorrect");
+            
+            // highlight the correct answer 
+            
+            // Delay changing the board to give time for animation
+            setTimeout(() => {
+                // just switch to the player 
+                state.player1turn = !state.player1turn;
+                // update the game board with a new question
+                setBoard();
+                // remove the animation class
+                $(e.target).removeClass("incorrect");
+            }, 2500)
+            
 
         }
     }
 
 })
 
-// Need to move questions from usedQuestions back to questions array 
 // Reset event listener
 $('button').on("click", () => {
     // Reset player states and scores on board
