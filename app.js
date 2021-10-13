@@ -63,12 +63,14 @@ const updatePlayerScore = () => {
         state.player1 +=1;
         $p1score.text(state.player1);
         state.player1turn = false;
+
     } 
     // if it is player 2's turn add to their score and switch players
     else {
         state.player2 += 1;
         $p2score.text(state.player2);
         state.player1turn = true;
+        
     }
 }
 
@@ -103,6 +105,10 @@ $.ajax(url)
 ///////////////////////////////
 // Event Listeners/ Game Logic
 ///////////////////////////////
+// Initialize player 1 with active class
+if (state.player1turn) {
+    $('#player1').toggleClass("active");
+}
 
 // Start game
 $('.startBtn').on("click", () => {
@@ -121,6 +127,8 @@ $answers.on("click", (e) => {
         // if the answer clicked is the correct answer
         if ($(e.target).text() === state.currentQuestion.answer) {
 
+
+
             // animate the correct answer choice
             $(e.target).addClass("correct");
 
@@ -132,6 +140,10 @@ $answers.on("click", (e) => {
                 setBoard();
                 // remove the animation class
                 $(e.target).removeClass("correct");
+                // Switch active player
+                $('#player1').toggleClass("active");
+                $('#player2').toggleClass("active");
+
             }, 2000)
 
         
@@ -151,6 +163,9 @@ $answers.on("click", (e) => {
                 setBoard();
                 // remove the animation class
                 $(e.target).removeClass("incorrect");
+                // Switch active player
+                $('#player1').toggleClass("active");
+                $('#player2').toggleClass("active");
             }, 2000)
             
 
@@ -166,8 +181,10 @@ $('button').on("click", () => {
     $p1score.text(state.player1);
     state.player2 = 0;
     $p2score.text(state.player2);
-    // Reset to player 1 being first
+    // Reset to player 1 being first and having active class
     state.player1turn = true;
+    $('#player1').addClass("active");
+    $('#player2').removeClass("active");
 
     // Reset questions
     // Move questions from usedQuestions back to questions array 
@@ -179,5 +196,6 @@ $('button').on("click", () => {
 
     // Reset board
     setBoard();
+
 })
 
