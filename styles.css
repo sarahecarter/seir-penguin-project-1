@@ -62,6 +62,8 @@
 body {
     background: rgb(14,10,69);
     background: radial-gradient(circle, var(--dark-purple) 25%, var(--blue) 93%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
