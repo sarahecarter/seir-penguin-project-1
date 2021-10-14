@@ -29,11 +29,13 @@ const $questionsLeft = $('#questions-left');
 ////////////////////////
 // Helper Functions
 ////////////////////////
+// Gets a random question from an array
 const getRandomQuestion = (arr) => {
     let randomNumber = Math.floor(Math.random() * arr.length);
-    return questions[randomNumber];
+    return arr[randomNumber];
 }
 
+// Sets board with question
 const setBoard = () => {
     // Get a random question from the questions array
     const q = getRandomQuestion(questions);
@@ -42,9 +44,8 @@ const setBoard = () => {
     // Move question from questions array to usedQuestions array so it can't be asked again
     usedQuestions.push(q);
     const qIndex = questions.indexOf(q);
-        // removes the question from the questions array
+    // removes the question from the questions array
     questions.splice(qIndex, 1);
-
 
     // Update text on page with question
     $question.text(q.question);
@@ -57,23 +58,23 @@ const setBoard = () => {
     $questionsLeft.text(`Questions left: ${questions.length}`);
 }
 
+// Updates the player scores
 const updatePlayerScore = () => {
     // if it is player 1's turn add to their score and switch players
     if (state.player1turn) {
         state.player1 +=1;
         $p1score.text(state.player1);
         state.player1turn = false;
-
     } 
     // if it is player 2's turn add to their score and switch players
     else {
         state.player2 += 1;
         $p2score.text(state.player2);
         state.player1turn = true;
-        
     }
 }
 
+// Determines who won the game
 const checkScores = () => {
     if (state.player1 > state.player2) {
         $("#results").text("Player 1 wins!");
@@ -90,7 +91,7 @@ const checkScores = () => {
 // AJAX Call to Get Trivia Questions
 ///////////////////////////////////////
 
-// AJAX call to trivia question API
+// AJAX call to trivia questions API
 const url = "https://cdn.contentful.com/spaces/unul3en2jtfl/environments/master/entries?access_token=YIweag8-CCwmyLDQiTXz5O1Zvf-LsVDbckGQC0y-J2A&content_type=triviaq";
 
 $.ajax(url)
@@ -117,58 +118,59 @@ $('.startBtn').on("click", () => {
 
 // Add an event listener on the answers
 $answers.on("click", (e) => {
-        // if the answer clicked is the correct answer
-        if ($(e.target).text() === state.currentQuestion.answer) {
+    // if the answer clicked is the correct answer
+    if ($(e.target).text() === state.currentQuestion.answer) {
 
-            // animate the correct answer choice
-            $(e.target).addClass("correct");
+        // animate the correct answer choice
+        $(e.target).addClass("correct");
 
-            // Delay changing the board to give time for animation
-            setTimeout(() => {
-                // update the player score and switch players
-                updatePlayerScore();
-                // Checks if there are still questions left
-                if (questions.length === 0) {
-                    $(".end").css("display", "flex");
-                    checkScores();
-                }
-                else {
-                    // update the game board with a new question
-                    setBoard();
-                    // remove the animation class
-                    $(e.target).removeClass("correct");
-                    // Switch active player
-                    $('#player1').toggleClass("active");
-                    $('#player2').toggleClass("active");
-                }
-            }, 2000)
-        }
-        // if the answer clicked is the incorrect answer 
-        else {
-                // animate the wrong answer choice
-                $(e.target).addClass("incorrect");
-            
-                // Delay changing the board to give time for animation
-                setTimeout(() => {
-                    // Checks if there are still questions left
-                    if (questions.length === 0) {
-                        $(".end").css("display", "flex");
-                        checkScores();
-                    }
-                    else {
-                        // just switch to the player 
-                        state.player1turn = !state.player1turn;
-                        // update the game board with a new question
-                        setBoard();
-                        // remove the animation class
-                        $(e.target).removeClass("incorrect");
-                        // Switch active player
-                        $('#player1').toggleClass("active");
-                        $('#player2').toggleClass("active");
-                    }
-                }, 2000)
-            
-        }
+        // Delay changing the board to give time for animation
+        setTimeout(() => {
+            // update the player score and switch players
+            updatePlayerScore();
+            // Checks if there are still questions left
+            if (questions.length === 0) {
+                $(".end").css("display", "flex");
+                checkScores();
+            }
+            else {
+                // update the game board with a new question
+                setBoard();
+                // remove the animation class
+                $(e.target).removeClass("correct");
+                // Switch active player
+                $('#player1').toggleClass("active");
+                $('#player2').toggleClass("active");
+            }
+        }, 2000)
+    }
+
+    // if the answer clicked is the incorrect answer 
+    else {
+
+        // animate the wrong answer choice
+        $(e.target).addClass("incorrect");
+        
+        // Delay changing the board to give time for animation
+        setTimeout(() => {
+            // Checks if there are still questions left
+            if (questions.length === 0) {
+                $(".end").css("display", "flex");
+                checkScores();
+            }
+            else {
+                // just switch to the next player 
+                state.player1turn = !state.player1turn;
+                // update the game board with a new question
+                setBoard();
+                // remove the animation class
+                $(e.target).removeClass("incorrect");
+                // Switch active player
+                $('#player1').toggleClass("active");
+                $('#player2').toggleClass("active");
+            }
+        }, 2000)
+    }
 })
 
 // Reset event listener
@@ -193,6 +195,5 @@ $('button').on("click", () => {
 
     // Reset board
     setBoard();
-
 })
 
