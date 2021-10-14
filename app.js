@@ -145,28 +145,29 @@ $answers.on("click", (e) => {
         }
         // if the answer clicked is the incorrect answer 
         else {
-            // Checks if there are still questions left
-            if (questions.length === 0) {
-                $(".end").css("display", "flex");
-                checkScores();
-            }
-            else {
                 // animate the wrong answer choice
                 $(e.target).addClass("incorrect");
             
                 // Delay changing the board to give time for animation
                 setTimeout(() => {
-                    // just switch to the player 
-                    state.player1turn = !state.player1turn;
-                    // update the game board with a new question
-                    setBoard();
-                    // remove the animation class
-                    $(e.target).removeClass("incorrect");
-                    // Switch active player
-                    $('#player1').toggleClass("active");
-                    $('#player2').toggleClass("active");
+                    // Checks if there are still questions left
+                    if (questions.length === 0) {
+                        $(".end").css("display", "flex");
+                        checkScores();
+                    }
+                    else {
+                        // just switch to the player 
+                        state.player1turn = !state.player1turn;
+                        // update the game board with a new question
+                        setBoard();
+                        // remove the animation class
+                        $(e.target).removeClass("incorrect");
+                        // Switch active player
+                        $('#player1').toggleClass("active");
+                        $('#player2').toggleClass("active");
+                    }
                 }, 2000)
-            }    
+            
         }
 })
 
