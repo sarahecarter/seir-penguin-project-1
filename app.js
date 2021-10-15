@@ -62,7 +62,7 @@ const setBoard = () => {
 const updatePlayerScore = () => {
     // if it is player 1's turn add to their score and switch players
     if (state.player1turn) {
-        state.player1 +=1;
+        state.player1 += 1;
         $p1score.text(state.player1);
         state.player1turn = false;
     } 
@@ -130,6 +130,8 @@ $answers.on("click", (e) => {
             updatePlayerScore();
             // Checks if there are still questions left
             if (questions.length === 0) {
+                // remove the animation class to prevent it from affecting next game
+                $(e.target).removeClass("correct");
                 $(".end").css("display", "flex");
                 checkScores();
             }
@@ -155,6 +157,8 @@ $answers.on("click", (e) => {
         setTimeout(() => {
             // Checks if there are still questions left
             if (questions.length === 0) {
+                // remove the animation class to prevent it from affecting next game
+                $(e.target).removeClass("incorrect");
                 $(".end").css("display", "flex");
                 checkScores();
             }
